@@ -1,6 +1,13 @@
-import app from '../src/app';
+import express, { Request, Response } from 'express';
+import { json } from 'body-parser';
 import connectDB from '../src/config/db';
-import { Request, Response } from 'express';
+import routes from '../src/routes/index';
+import errorMiddleware from '../src/middlewares/error.middleware';
+
+const app = express();
+
+// Middleware
+app.use(json());
 
 // Health check route
 app.get("/", (req: Request, res: Response) => {
@@ -10,10 +17,29 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// Connect to MongoDB
-connectDB().catch(err => {
-  console.error('MongoDB connection error:', err);
-});
+// API Routes
+app.use('/api', routes);
 
-// Export the Express app for Vercel
+// Error handling middleware
+app.use(errorMiddleware);
+
+// Connect to MongoDB (with error handling)
+let isConnected = false;
+
+const connectToDatabase = async () => {
+  if (isConnected) {
+    return;
+  }
+  try {
+    await connectDB();
+    isConnected = true;
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+  }
+};
+
+// Connect on cold start
+connectToDatabase();
+
+// Export for Vercel
 export default app;
