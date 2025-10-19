@@ -1,5 +1,9 @@
 # 🚀 Backend API - Autenticação JWT com MongoDB
 
+## 🎥 Vídeo Demonstrativo
+
+[▶️ Assistir no YouTube](https://youtu.be/1_sYrAeUMDM)
+
 API RESTful desenvolvida com Node.js, TypeScript, Express e MongoDB, implementando autenticação JWT (JSON Web Tokens) e validação de dados.
 
 ## 🛠️ Tecnologias Utilizadas
