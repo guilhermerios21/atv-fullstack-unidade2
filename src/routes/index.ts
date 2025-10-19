@@ -4,7 +4,8 @@ import userRoutes from './user.routes';
 
 const router = Router();
 
-router.use('/auth', authRoutes);
+// Rotas de autenticação (sem prefixo adicional)
+router.use('/', authRoutes);
 router.use('/users', userRoutes);
 
 export default router;
