@@ -1,6 +1,7 @@
 import app from './app';
 import connectDB from './config/db';
 import { config } from './config';
+import { Request, Response } from 'express';
 
 const PORT = config.PORT || 3000;
 
@@ -18,5 +19,16 @@ const startServer = async () => {
         process.exit(1);
     }
 };
+
+app.get("/", (req: Request, res: Response) => {
+  
+  res.status(200).json({ 
+
+    message: '🚀 Projeto Backend em Express com Autenticação JWT e MongoDB funcionando!',
+    status: 'WORKING',
+  
+  });
+
+});
 
 startServer();
