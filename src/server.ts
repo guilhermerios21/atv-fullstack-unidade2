@@ -41,8 +41,13 @@ app.get("/", (req: Request, res: Response) => {
   
   res.status(200).json({ 
 
-    message: '🚀 Projeto Backend em Express com Autenticação JWT e MongoDB funcionando!',
+    message: '✅ API de Autenticação JWT v1.0.0 - Sistema operacional!',
     status: 'WORKING',
+    version: '1.0.0',
+    endpoints: {
+      public: ['/api/register', '/api/login'],
+      protected: ['/api/protected', '/api/users']
+    }
   
   });
 
