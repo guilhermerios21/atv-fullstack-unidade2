@@ -1,368 +1,1071 @@
-{
-  "info": {
-    "_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
-    "name": "Backend JWT - Atividade Fullstack Unidade 2",
-    "description": "Collection completa para testar API de autenticação JWT com MongoDB",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "1. Cadastro (Register)",
-      "item": [
-        {
-          "name": "✅ Cadastro Bem-Sucedido",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/register",
+{{
+
+  "info": {  "info": {
+
+    "_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",    "_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+
+    "name": "Backend JWT + Tasks CRUD - Atividade v2.1.0",    "name": "Backend JWT - Atividade Fullstack Unidade 2 - v2",
+
+    "description": "Collection completa para testar API de autenticação JWT com MongoDB e CRUD de Tarefas. Inclui casos de sucesso e erro.",    "description": "Collection completa para testar API de autenticação JWT com MongoDB e CRUD de Tarefas",
+
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+
+  },  },
+
+  "item": [  "item": [
+
+    {    {
+
+      "name": "0. Health Check",      "name": "1. Cadastro (Register)",
+
+      "item": [      "item": [
+
+        {        {
+
+          "name": "✅ Health Check - API Rodando",          "name": "✅ Cadastro Bem-Sucedido",
+
+          "request": {          "request": {
+
+            "method": "GET",            "method": "POST",
+
+            "header": [],            "header": [
+
+            "url": {              {
+
+              "raw": "{{base_url}}/",                "key": "Content-Type",
+
+              "host": ["{{base_url}}"],                "value": "application/json"
+
+              "path": [""]              }
+
+            },            ],
+
+            "description": "Verifica se a API está funcionando. Deve retornar status 200."            "body": {
+
+          }              "mode": "raw",
+
+        }              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
+
+      ]            },
+
+    },            "url": {
+
+    {              "raw": "{{base_url}}/api/register",
+
+      "name": "1. Cadastro (Register)",              "host": ["{{base_url}}"],
+
+      "item": [              "path": ["api", "register"]
+
+        {            },
+
+          "name": "✅ Cadastro Bem-Sucedido",            "description": "Cadastro com dados válidos. Deve retornar status 201."
+
+          "request": {          },
+
+            "method": "POST",          "response": []
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],        },
+
+            "body": {        {
+
+              "mode": "raw",          "name": "❌ Cadastro - Email Repetido",
+
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"          "request": {
+
+            },            "method": "POST",
+
+            "url": {            "header": [
+
+              "raw": "{{base_url}}/api/register",              {
+
+              "host": ["{{base_url}}"],                "key": "Content-Type",
+
+              "path": ["api", "register"]                "value": "application/json"
+
+            },              }
+
+            "description": "Cadastro com dados válidos. Deve retornar status 201."            ],
+
+          }            "body": {
+
+        },              "mode": "raw",
+
+        {              "raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha456\"\n}"
+
+          "name": "❌ Cadastro - Email Repetido",            },
+
+          "request": {            "url": {
+
+            "method": "POST",              "raw": "{{base_url}}/api/register",
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],              "host": ["{{base_url}}"],
+
+            "body": {              "path": ["api", "register"]
+
+              "mode": "raw",            },
+
+              "raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha456\"\n}"            "description": "Tentativa de cadastro com email já existente. Deve retornar status 400 ou 422."
+
+            },          },
+
+            "url": {          "response": []
+
+              "raw": "{{base_url}}/api/register",        },
+
+              "host": ["{{base_url}}"],        {
+
+              "path": ["api", "register"]          "name": "❌ Cadastro - Senha Inválida (< 6 caracteres)",
+
+            },          "request": {
+
+            "description": "Email já existente. Deve retornar status 400 ou 422."            "method": "POST",
+
+          }            "header": [
+
+        },              {
+
+        {                "key": "Content-Type",
+
+          "name": "❌ Cadastro - Requisição Mal Formatada",                "value": "application/json"
+
+          "request": {              }
+
+            "method": "POST",            ],
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],            "body": {
+
+            "body": {              "mode": "raw",
+
+              "mode": "raw",              "raw": "{\n  \"name\": \"Pedro Costa\",\n  \"email\": \"pedro.costa@example.com\",\n  \"password\": \"123\"\n}"
+
+              "raw": "{\n  \"name\": \"Carlos Souza\"\n}"            },
+
+            },            "url": {
+
+            "url": {              "raw": "{{base_url}}/api/register",
+
+              "raw": "{{base_url}}/api/register",              "host": ["{{base_url}}"],
+
+              "host": ["{{base_url}}"],              "path": ["api", "register"]
+
+              "path": ["api", "register"]            },
+
+            },            "description": "Senha com menos de 6 caracteres. Deve retornar status 422."
+
+            "description": "Requisição sem campos obrigatórios. Deve retornar status 400."          },
+
+          }          "response": []
+
+        }        },
+
+      ]        {
+
+    },          "name": "❌ Cadastro - Email Inválido",
+
+    {          "request": {
+
+      "name": "2. Login",            "method": "POST",
+
+      "item": [            "header": [
+
+        {              {
+
+          "name": "✅ Login Bem-Sucedido",                "key": "Content-Type",
+
+          "event": [                "value": "application/json"
+
+            {              }
+
+              "listen": "test",            ],
+
+              "script": {            "body": {
+
+                "exec": [              "mode": "raw",
+
+                  "var jsonData = pm.response.json();",              "raw": "{\n  \"name\": \"Ana Lima\",\n  \"email\": \"email-sem-arroba\",\n  \"password\": \"senha789\"\n}"
+
+                  "if (jsonData.token) {",            },
+
+                  "    pm.environment.set('auth_token', jsonData.token);",            "url": {
+
+                  "    console.log('Token JWT salvo: ' + jsonData.token);",              "raw": "{{base_url}}/api/register",
+
+                  "}"              "host": ["{{base_url}}"],
+
+                ],              "path": ["api", "register"]
+
+                "type": "text/javascript"            },
+
+              }            "description": "Email em formato inválido (sem @). Deve retornar status 422."
+
+            }          },
+
+          ],          "response": []
+
+          "request": {        },
+
+            "method": "POST",        {
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],          "name": "❌ Cadastro - Requisição Mal Formatada",
+
+            "body": {          "request": {
+
+              "mode": "raw",            "method": "POST",
+
+              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"            "header": [
+
+            },              {
+
+            "url": {                "key": "Content-Type",
+
+              "raw": "{{base_url}}/api/login",                "value": "application/json"
+
+              "host": ["{{base_url}}"],              }
+
+              "path": ["api", "login"]            ],
+
+            },            "body": {
+
+            "description": "Login com credenciais válidas. Retorna token JWT automaticamente salvo em {{auth_token}}."              "mode": "raw",
+
+          }              "raw": "{\n  \"name\": \"Carlos Souza\"\n}"
+
+        },            },
+
+        {            "url": {
+
+          "name": "❌ Login - Credenciais Inválidas",              "raw": "{{base_url}}/api/register",
+
+          "request": {              "host": ["{{base_url}}"],
+
+            "method": "POST",              "path": ["api", "register"]
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],            },
+
+            "body": {            "description": "Requisição sem campos obrigatórios (email e password faltando). Deve retornar status 400 ou 422."
+
+              "mode": "raw",          },
+
+              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senhaErrada\"\n}"          "response": []
+
+            },        }
+
+            "url": {      ]
+
+              "raw": "{{base_url}}/api/login",    },
+
+              "host": ["{{base_url}}"],    {
+
+              "path": ["api", "login"]      "name": "2. Login",
+
+            },      "item": [
+
+            "description": "Senha incorreta. Deve retornar status 401."        {
+
+          }          "name": "✅ Login Bem-Sucedido",
+
+        },          "event": [
+
+        {            {
+
+          "name": "❌ Login - Requisição Mal Formatada",              "listen": "test",
+
+          "request": {              "script": {
+
+            "method": "POST",                "exec": [
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],                  "// Salva o token JWT automaticamente na variável de ambiente",
+
+            "body": {                  "var jsonData = pm.response.json();",
+
+              "mode": "raw",                  "if (jsonData.token) {",
+
+              "raw": "{\n  \"email\": \"joao.silva@example.com\"\n}"                  "    pm.environment.set(\"auth_token\", jsonData.token);",
+
+            },                  "    console.log(\"Token JWT salvo: \" + jsonData.token);",
+
+            "url": {                  "}"
+
+              "raw": "{{base_url}}/api/login",                ],
+
+              "host": ["{{base_url}}"],                "type": "text/javascript"
+
+              "path": ["api", "login"]              }
+
+            },            }
+
+            "description": "Sem campo obrigatório. Deve retornar status 400."          ],
+
+          }          "request": {
+
+        }            "method": "POST",
+
+      ]            "header": [
+
+    },              {
+
+    {                "key": "Content-Type",
+
+      "name": "3. Rota Protegida (Protected)",                "value": "application/json"
+
+      "item": [              }
+
+        {            ],
+
+          "name": "✅ Acesso com Token Válido",            "body": {
+
+          "request": {              "mode": "raw",
+
+            "auth": {              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
+
+              "type": "bearer",            },
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]            "url": {
+
+            },              "raw": "{{base_url}}/api/login",
+
+            "method": "GET",              "host": ["{{base_url}}"],
+
+            "header": [],              "path": ["api", "login"]
+
+            "url": {            },
+
+              "raw": "{{base_url}}/api/protected",            "description": "Login com credenciais válidas. Deve retornar status 200 e token JWT. O token é salvo automaticamente na variável {{auth_token}}."
+
+              "host": ["{{base_url}}"],          },
+
+              "path": ["api", "protected"]          "response": []
+
+            },        },
+
+            "description": "Acesso com token válido. Deve retornar status 200."        {
+
+          }          "name": "❌ Login - Credenciais Inválidas",
+
+        },          "request": {
+
+        {            "method": "POST",
+
+          "name": "❌ Acesso SEM Token",            "header": [
+
+          "request": {              {
+
+            "method": "GET",                "key": "Content-Type",
+
+            "header": [],                "value": "application/json"
+
+            "url": {              }
+
+              "raw": "{{base_url}}/api/protected",            ],
+
+              "host": ["{{base_url}}"],            "body": {
+
+              "path": ["api", "protected"]              "mode": "raw",
+
+            },              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senhaErrada123\"\n}"
+
+            "description": "Sem token. Deve retornar status 401."            },
+
+          }            "url": {
+
+        },              "raw": "{{base_url}}/api/login",
+
+        {              "host": ["{{base_url}}"],
+
+          "name": "❌ Acesso com Token Inválido",              "path": ["api", "login"]
+
+          "request": {            },
+
+            "auth": {            "description": "Login com senha incorreta. Deve retornar status 401."
+
+              "type": "bearer",          },
+
+              "bearer": [{"key": "token", "value": "token_invalido_xyz", "type": "string"}]          "response": []
+
+            },        },
+
+            "method": "GET",        {
+
+            "header": [],          "name": "❌ Login - Senha Inválida (Formato)",
+
+            "url": {          "request": {
+
+              "raw": "{{base_url}}/api/protected",            "method": "POST",
+
+              "host": ["{{base_url}}"],            "header": [
+
+              "path": ["api", "protected"]              {
+
+            },                "key": "Content-Type",
+
+            "description": "Token inválido. Deve retornar status 401."                "value": "application/json"
+
+          }              }
+
+        }            ],
+
+      ]            "body": {
+
+    },              "mode": "raw",
+
+    {              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"abc\"\n}"
+
+      "name": "4. Tasks - Criar (POST)",            },
+
+      "item": [            "url": {
+
+        {              "raw": "{{base_url}}/api/login",
+
+          "name": "✅ Criar Tarefa - Completa",              "host": ["{{base_url}}"],
+
+          "request": {              "path": ["api", "login"]
+
+            "auth": {            },
+
+              "type": "bearer",            "description": "Login com senha em formato inválido (< 6 caracteres). Deve retornar status 422."
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]          },
+
+            },          "response": []
+
+            "method": "POST",        },
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],        {
+
+            "body": {          "name": "❌ Login - Email Inválido (Formato)",
+
+              "mode": "raw",          "request": {
+
+              "raw": "{\n  \"title\": \"Estudar Node.js\",\n  \"description\": \"Revisar Express e MongoDB\",\n  \"status\": \"pending\",\n  \"priority\": \"high\",\n  \"dueDate\": \"2025-10-30T23:59:59.000Z\",\n  \"tags\": [\"estudos\", \"backend\"]\n}"            "method": "POST",
+
+            },            "header": [
+
+            "url": {              {
+
+              "raw": "{{base_url}}/api/tasks",                "key": "Content-Type",
+
+              "host": ["{{base_url}}"],                "value": "application/json"
+
+              "path": ["api", "tasks"]              }
+
+            },            ],
+
+            "description": "Cria tarefa com todos os campos. Deve retornar status 201."            "body": {
+
+          }              "mode": "raw",
+
+        },              "raw": "{\n  \"email\": \"email-sem-arroba\",\n  \"password\": \"senha123\"\n}"
+
+        {            },
+
+          "name": "✅ Criar Tarefa - Mínima",            "url": {
+
+          "request": {              "raw": "{{base_url}}/api/login",
+
+            "auth": {              "host": ["{{base_url}}"],
+
+              "type": "bearer",              "path": ["api", "login"]
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]            },
+
+            },            "description": "Login com email em formato inválido. Deve retornar status 422."
+
+            "method": "POST",          },
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],          "response": []
+
+            "body": {        },
+
+              "mode": "raw",        {
+
+              "raw": "{\n  \"title\": \"Comprar leite\"\n}"          "name": "❌ Login - Requisição Mal Formatada",
+
+            },          "request": {
+
+            "url": {            "method": "POST",
+
+              "raw": "{{base_url}}/api/tasks",            "header": [
+
+              "host": ["{{base_url}}"],              {
+
+              "path": ["api", "tasks"]                "key": "Content-Type",
+
+            },                "value": "application/json"
+
+            "description": "Tarefa com apenas título. Deve retornar status 201."              }
+
+          }            ],
+
+        },            "body": {
+
+        {              "mode": "raw",
+
+          "name": "❌ Criar Tarefa - SEM Token",              "raw": "{\n  \"email\": \"joao.silva@example.com\"\n}"
+
+          "request": {            },
+
+            "method": "POST",            "url": {
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],              "raw": "{{base_url}}/api/login",
+
+            "body": {              "host": ["{{base_url}}"],
+
+              "mode": "raw",              "path": ["api", "login"]
+
+              "raw": "{\n  \"title\": \"Tarefa sem auth\"\n}"            },
+
+            },            "description": "Login sem campo obrigatório (password faltando). Deve retornar status 400 ou 422."
+
+            "url": {          },
+
+              "raw": "{{base_url}}/api/tasks",          "response": []
+
+              "host": ["{{base_url}}"],        }
+
+              "path": ["api", "tasks"]      ]
+
+            },    },
+
+            "description": "Sem token. Deve retornar status 401."    {
+
+          }      "name": "3. Rota Protegida (Protected)",
+
+        },      "item": [
+
+        {        {
+
+          "name": "❌ Criar Tarefa - Token Inválido",          "name": "✅ Acesso com Token Válido",
+
+          "request": {          "request": {
+
+            "auth": {            "auth": {
+
+              "type": "bearer",              "type": "bearer",
+
+              "bearer": [{"key": "token", "value": "token_invalido", "type": "string"}]              "bearer": [
+
+            },                {
+
+            "method": "POST",                  "key": "token",
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],                  "value": "{{auth_token}}",
+
+            "body": {                  "type": "string"
+
+              "mode": "raw",                }
+
+              "raw": "{\n  \"title\": \"Tarefa com token inválido\"\n}"              ]
+
+            },            },
+
+            "url": {            "method": "GET",
+
+              "raw": "{{base_url}}/api/tasks",            "header": [],
+
+              "host": ["{{base_url}}"],            "url": {
+
+              "path": ["api", "tasks"]              "raw": "{{base_url}}/api/protected",
+
+            },              "host": ["{{base_url}}"],
+
+            "description": "Token inválido. Deve retornar status 401."              "path": ["api", "protected"]
+
+          }            },
+
+        },            "description": "Acesso à rota protegida com token JWT válido. Usa o token salvo em {{auth_token}}. Deve retornar status 200."
+
+        {          },
+
+          "name": "❌ Criar Tarefa - Título Muito Curto",          "response": []
+
+          "request": {        },
+
+            "auth": {        {
+
+              "type": "bearer",          "name": "❌ Acesso SEM Token",
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]          "request": {
+
+            },            "method": "GET",
+
+            "method": "POST",            "header": [],
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],            "url": {
+
+            "body": {              "raw": "{{base_url}}/api/protected",
+
+              "mode": "raw",              "host": ["{{base_url}}"],
+
+              "raw": "{\n  \"title\": \"AB\"\n}"              "path": ["api", "protected"]
+
+            },            },
+
+            "url": {            "description": "Tentativa de acesso sem enviar token JWT. Deve retornar status 401."
+
+              "raw": "{{base_url}}/api/tasks",          },
+
+              "host": ["{{base_url}}"],          "response": []
+
+              "path": ["api", "tasks"]        },
+
+            },        {
+
+            "description": "Título < 3 caracteres. Deve retornar status 400."          "name": "❌ Acesso com Token Inválido",
+
+          }          "request": {
+
+        },            "auth": {
+
+        {              "type": "bearer",
+
+          "name": "❌ Criar Tarefa - Sem Título",              "bearer": [
+
+          "request": {                {
+
+            "auth": {                  "key": "token",
+
+              "type": "bearer",                  "value": "token_jwt_invalido_12345",
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]                  "type": "string"
+
+            },                }
+
+            "method": "POST",              ]
+
+            "header": [{"key": "Content-Type", "value": "application/json"}],            },
+
+            "body": {            "method": "GET",
+
+              "mode": "raw",            "header": [],
+
+              "raw": "{\n  \"description\": \"Sem título\"\n}"            "url": {
+
+            },              "raw": "{{base_url}}/api/protected",
+
+            "url": {              "host": ["{{base_url}}"],
+
+              "raw": "{{base_url}}/api/tasks",              "path": ["api", "protected"]
+
+              "host": ["{{base_url}}"],            },
+
+              "path": ["api", "tasks"]            "description": "Tentativa de acesso com token JWT inválido/malformado. Deve retornar status 401."
+
+            },          },
+
+            "description": "Falta campo obrigatório. Deve retornar status 400."          "response": []
+
+          }        }
+
+        }      ]
+
+      ]    },
+
+    },    {
+
+    {      "name": "0. Health Check",
+
+      "name": "5. Tasks - Listar (GET)",      "item": [
+
+      "item": [        {
+
+        {          "name": "✅ Health Check - API Rodando",
+
+          "name": "✅ Listar Todas as Tarefas",          "request": {
+
+          "request": {            "method": "GET",
+
+            "auth": {            "header": [],
+
+              "type": "bearer",            "url": {
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]              "raw": "{{base_url}}/",
+
+            },              "host": ["{{base_url}}"],
+
+            "method": "GET",              "path": [""]
+
+            "header": [],            },
+
+            "url": {            "description": "Verifica se a API está funcionando. Deve retornar status 200 com mensagem de sucesso."
+
+              "raw": "{{base_url}}/api/tasks",          },
+
+              "host": ["{{base_url}}"],          "response": []
+
+              "path": ["api", "tasks"]        }
+
+            },      ]
+
+            "description": "Lista todas as tarefas do usuário. Deve retornar status 200."    }
+
+          }  ],
+
+        },  "event": [
+
+        {    {
+
+          "name": "✅ Listar - Filtro por Status",      "listen": "prerequest",
+
+          "request": {      "script": {
+
+            "auth": {        "type": "text/javascript",
+
+              "type": "bearer",        "exec": [""]
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]      }
+
+            },    },
+
+            "method": "GET",    {
+
+            "header": [],      "listen": "test",
+
+            "url": {      "script": {
+
+              "raw": "{{base_url}}/api/tasks?status=pending",        "type": "text/javascript",
+
+              "host": ["{{base_url}}"],        "exec": [""]
+
+              "path": ["api", "tasks"],      }
+
+              "query": [{"key": "status", "value": "pending"}]    }
+
+            },  ],
+
+            "description": "Filtro por status (pending, in_progress, completed, cancelled)."  "variable": [
+
+          }    {
+
+        },      "key": "base_url",
+
+        {      "value": "http://localhost:3000",
+
+          "name": "✅ Listar - Filtro por Prioridade",      "type": "string"
+
+          "request": {    },
+
+            "auth": {    {
+
+              "type": "bearer",      "key": "auth_token",
+
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]      "value": "",
+
+            },      "type": "string"
+
+            "method": "GET",    }
+
+            "header": [],  ]
+
+            "url": {}
+
+              "raw": "{{base_url}}/api/tasks?priority=high",
               "host": ["{{base_url}}"],
-              "path": ["api", "register"]
+              "path": ["api", "tasks"],
+              "query": [{"key": "priority", "value": "high"}]
             },
-            "description": "Cadastro com dados válidos. Deve retornar status 201."
-          },
-          "response": []
+            "description": "Filtro por prioridade (low, medium, high, urgent)."
+          }
         },
         {
-          "name": "❌ Cadastro - Email Repetido",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha456\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/register",
-              "host": ["{{base_url}}"],
-              "path": ["api", "register"]
-            },
-            "description": "Tentativa de cadastro com email já existente. Deve retornar status 400 ou 422."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Cadastro - Senha Inválida (< 6 caracteres)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Pedro Costa\",\n  \"email\": \"pedro.costa@example.com\",\n  \"password\": \"123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/register",
-              "host": ["{{base_url}}"],
-              "path": ["api", "register"]
-            },
-            "description": "Senha com menos de 6 caracteres. Deve retornar status 422."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Cadastro - Email Inválido",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Ana Lima\",\n  \"email\": \"email-sem-arroba\",\n  \"password\": \"senha789\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/register",
-              "host": ["{{base_url}}"],
-              "path": ["api", "register"]
-            },
-            "description": "Email em formato inválido (sem @). Deve retornar status 422."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Cadastro - Requisição Mal Formatada",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Carlos Souza\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/register",
-              "host": ["{{base_url}}"],
-              "path": ["api", "register"]
-            },
-            "description": "Requisição sem campos obrigatórios (email e password faltando). Deve retornar status 400 ou 422."
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "2. Login",
-      "item": [
-        {
-          "name": "✅ Login Bem-Sucedido",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Salva o token JWT automaticamente na variável de ambiente",
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData.token) {",
-                  "    pm.environment.set(\"auth_token\", jsonData.token);",
-                  "    console.log(\"Token JWT salvo: \" + jsonData.token);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "login"]
-            },
-            "description": "Login com credenciais válidas. Deve retornar status 200 e token JWT. O token é salvo automaticamente na variável {{auth_token}}."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Login - Credenciais Inválidas",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senhaErrada123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "login"]
-            },
-            "description": "Login com senha incorreta. Deve retornar status 401."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Login - Senha Inválida (Formato)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"abc\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "login"]
-            },
-            "description": "Login com senha em formato inválido (< 6 caracteres). Deve retornar status 422."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Login - Email Inválido (Formato)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"email-sem-arroba\",\n  \"password\": \"senha123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "login"]
-            },
-            "description": "Login com email em formato inválido. Deve retornar status 422."
-          },
-          "response": []
-        },
-        {
-          "name": "❌ Login - Requisição Mal Formatada",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"joao.silva@example.com\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/api/login",
-              "host": ["{{base_url}}"],
-              "path": ["api", "login"]
-            },
-            "description": "Login sem campo obrigatório (password faltando). Deve retornar status 400 ou 422."
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "3. Rota Protegida (Protected)",
-      "item": [
-        {
-          "name": "✅ Acesso com Token Válido",
+          "name": "✅ Listar - Filtro por Tags",
           "request": {
             "auth": {
               "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{auth_token}}",
-                  "type": "string"
-                }
-              ]
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
             },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/protected",
+              "raw": "{{base_url}}/api/tasks?tags=estudos,backend",
               "host": ["{{base_url}}"],
-              "path": ["api", "protected"]
+              "path": ["api", "tasks"],
+              "query": [{"key": "tags", "value": "estudos,backend"}]
             },
-            "description": "Acesso à rota protegida com token JWT válido. Usa o token salvo em {{auth_token}}. Deve retornar status 200."
-          },
-          "response": []
+            "description": "Filtro por tags (separadas por vírgula)."
+          }
         },
         {
-          "name": "❌ Acesso SEM Token",
+          "name": "❌ Listar - SEM Token",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/protected",
+              "raw": "{{base_url}}/api/tasks",
               "host": ["{{base_url}}"],
-              "path": ["api", "protected"]
+              "path": ["api", "tasks"]
             },
-            "description": "Tentativa de acesso sem enviar token JWT. Deve retornar status 401."
-          },
-          "response": []
-        },
+            "description": "Sem token. Deve retornar status 401."
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Tasks - Buscar por ID (GET)",
+      "item": [
         {
-          "name": "❌ Acesso com Token Inválido",
+          "name": "✅ Buscar Tarefa por ID",
           "request": {
             "auth": {
               "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "token_jwt_invalido_12345",
-                  "type": "string"
-                }
-              ]
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
             },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/protected",
+              "raw": "{{base_url}}/api/tasks/:taskId",
               "host": ["{{base_url}}"],
-              "path": ["api", "protected"]
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
             },
-            "description": "Tentativa de acesso com token JWT inválido/malformado. Deve retornar status 401."
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "0. Health Check",
-      "item": [
+            "description": "Busca tarefa por ID. Substitua :taskId. Deve retornar status 200."
+          }
+        },
         {
-          "name": "✅ Health Check - API Rodando",
+          "name": "❌ Buscar - ID Inexistente ou de Outro Usuário",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
+            },
+            "description": "ID inexistente/não autorizado. Deve retornar status 404."
+          }
+        },
+        {
+          "name": "❌ Buscar - SEM Token",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/",
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
               "host": ["{{base_url}}"],
-              "path": [""]
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
             },
-            "description": "Verifica se a API está funcionando. Deve retornar status 200 com mensagem de sucesso."
-          },
-          "response": []
+            "description": "Sem token. Deve retornar status 401."
+          }
         }
       ]
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [""]
-      }
     },
     {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [""]
-      }
+      "name": "7. Tasks - Atualizar Completo (PUT)",
+      "item": [
+        {
+          "name": "✅ Atualizar (PUT) - Completo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Estudar Node.js - Atualizado\",\n  \"description\": \"Conceitos avançados\",\n  \"status\": \"in_progress\",\n  \"priority\": \"urgent\",\n  \"dueDate\": \"2025-10-31T23:59:59.000Z\",\n  \"tags\": [\"estudos\", \"backend\", \"jwt\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
+            },
+            "description": "PUT requer title, status, priority. Deve retornar status 200."
+          }
+        },
+        {
+          "name": "❌ Atualizar (PUT) - Dados Incompletos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Apenas descrição\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
+            },
+            "description": "PUT sem campos obrigatórios. Deve retornar status 400."
+          }
+        },
+        {
+          "name": "❌ Atualizar (PUT) - ID Inexistente",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Teste\",\n  \"status\": \"completed\",\n  \"priority\": \"low\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
+            },
+            "description": "ID inexistente/não autorizado. Deve retornar status 404."
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Tasks - Atualizar Parcial (PATCH)",
+      "item": [
+        {
+          "name": "✅ Atualizar (PATCH) - Parcial",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PATCH",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
+            },
+            "description": "PATCH atualiza apenas campos enviados. Deve retornar status 200."
+          }
+        },
+        {
+          "name": "❌ Atualizar (PATCH) - SEM Campos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PATCH",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
+            },
+            "description": "PATCH sem campos. Deve retornar status 400."
+          }
+        },
+        {
+          "name": "❌ Atualizar (PATCH) - ID Inexistente",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "PATCH",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"priority\": \"low\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
+            },
+            "description": "ID inexistente/não autorizado. Deve retornar status 404."
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Tasks - Deletar (DELETE)",
+      "item": [
+        {
+          "name": "✅ Deletar Tarefa",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [{"key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI"}]
+            },
+            "description": "Deleta tarefa. Deve retornar status 200."
+          }
+        },
+        {
+          "name": "❌ Deletar - ID Inexistente",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
+            },
+            "description": "ID inexistente/não autorizado. Deve retornar status 404."
+          }
+        },
+        {
+          "name": "❌ Deletar - SEM Token",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/507f1f77bcf86cd799439011",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "507f1f77bcf86cd799439011"]
+            },
+            "description": "Sem token. Deve retornar status 401."
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Tasks - Estatísticas",
+      "item": [
+        {
+          "name": "✅ Obter Estatísticas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{"key": "token", "value": "{{auth_token}}", "type": "string"}]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/stats",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", "stats"]
+            },
+            "description": "Retorna estatísticas das tarefas por status. Deve retornar status 200."
+          }
+        }
+      ]
     }
   ],
   "variable": [
