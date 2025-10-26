@@ -17,6 +17,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customSiteTitle: 'API Docs - JWT + Tasks CRUD',
 }));
 
+// Swagger JSON endpoint (fallback para Vercel serverless)
+app.get('/api-docs.json', (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 // Health check route
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ 

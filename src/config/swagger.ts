@@ -22,7 +22,7 @@ const options: swaggerJsdoc.Options = {
         description: 'Servidor de Desenvolvimento',
       },
       {
-        url: 'https://seu-dominio.vercel.app',
+        url: 'https://backend-express-conference-ticket-guilhermerios.tech',
         description: 'Servidor de Produção (Vercel)',
       },
     ],
@@ -194,8 +194,9 @@ const options: swaggerJsdoc.Options = {
     security: [],
   },
     apis: [
-      path.join(__dirname, '../../src/routes/*.ts'),
-      path.join(__dirname, '../routes/*.ts'),
+     path.join(__dirname, '../routes/auth.routes.ts'),
+     path.join(__dirname, '../routes/task.routes.ts'),
+     path.join(__dirname, '../routes/user.routes.ts'),
     ],
 };
 
