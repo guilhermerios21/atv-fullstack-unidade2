@@ -4,10 +4,11 @@ import { config } from './index';
 const connectDB = async () => {
     try {
         await mongoose.connect(config.MONGODB_URI, {
-            serverSelectionTimeoutMS: 5000, // Timeout após 5 segundos
+            dbName: config.MONGODB_DB_NAME,
+            serverSelectionTimeoutMS: 8000, // tenta por até 8s selecionar servidor
             socketTimeoutMS: 45000, // Timeout de socket
         });
-        console.log('MongoDB connected successfully');
+        console.log(`MongoDB connected successfully (db: ${config.MONGODB_DB_NAME})`);
     } catch (error) {
         console.error('MongoDB connection failed:', error);
         throw error;
