@@ -4,11 +4,9 @@ import { config } from './index';
 const connectDB = async () => {
     try {
         await mongoose.connect(config.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false,
-        } as any);
+            serverSelectionTimeoutMS: 5000, // Timeout após 5 segundos
+            socketTimeoutMS: 45000, // Timeout de socket
+        });
         console.log('MongoDB connected successfully');
     } catch (error) {
         console.error('MongoDB connection failed:', error);

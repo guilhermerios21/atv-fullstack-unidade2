@@ -30,6 +30,17 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
+// Middleware para garantir conexão com MongoDB antes de cada request
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    res.status(503).json({ message: 'Database connection unavailable' });
+  }
+});
+
 // API Routes
 app.use('/api', routes);
 
@@ -46,13 +57,12 @@ const connectToDatabase = async () => {
   try {
     await connectDB();
     isConnected = true;
+    console.log('MongoDB connected successfully');
   } catch (error) {
     console.error('MongoDB connection error:', error);
+    throw error;
   }
 };
-
-// Connect on cold start
-connectToDatabase();
 
 // Export for Vercel
 export default app;
