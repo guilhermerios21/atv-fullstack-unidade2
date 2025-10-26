@@ -37,9 +37,29 @@ Sistema completo de gerenciamento de tarefas com as seguintes funcionalidades:
 - **Mongoose** v5.10.9 - ODM para MongoDB
 - **JWT** (jsonwebtoken v8.5.1) - Autenticação stateless
 - **bcryptjs** v2.4.3 - Hash seguro de senhas
+- **Swagger/OpenAPI** - Documentação interativa da API
 - **Docker** & **Docker Compose** - Containerização
 - **ts-node-dev** - Hot reload em desenvolvimento
 - **Vercel** - Deploy serverless em produção
+
+## 📚 Documentação Interativa (Swagger)
+
+A API possui documentação interativa completa através do **Swagger UI**, onde você pode:
+- Visualizar todos os endpoints disponíveis
+- Ver schemas de requisição e resposta
+- Testar os endpoints diretamente no navegador
+- Entender os códigos de status HTTP retornados
+
+### Acessar a documentação:
+- **Local**: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- **Produção**: `https://seu-dominio.vercel.app/api-docs`
+
+**Como usar:**
+1. Acesse `/api-docs` no navegador
+2. Execute o endpoint `POST /api/login` para obter o token JWT
+3. Clique no botão **Authorize** 🔒 no topo da página
+4. Cole o token JWT e clique em **Authorize**
+5. Agora você pode testar as rotas protegidas diretamente no Swagger!
 
 ## � Arquitetura do Projeto
 
@@ -155,10 +175,19 @@ npm start
 
 A API estará disponível em: **http://localhost:3000**
 
-### 6. Acessar Mongo Express (opcional)
-Interface visual do MongoDB: **http://localhost:8081**
+### 6. Acessar recursos visuais
+
+#### 📚 Documentação Swagger
+Acesse: **http://localhost:3000/api-docs**
+- Documentação interativa completa
+- Teste os endpoints diretamente no navegador
+- Use o botão "Authorize" para adicionar o token JWT
+
+#### 🗄️ Mongo Express (Interface do MongoDB)
+Acesse: **http://localhost:8081**
 - Usuário: `mongoexpressuser`
 - Senha: `mongoexpresspass`
+- Visualize e gerencie os dados do banco
 
 ## 📡 Códigos de Status HTTP
 

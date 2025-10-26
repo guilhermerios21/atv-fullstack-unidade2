@@ -1,0 +1,219 @@
+{
+  "info": {
+    "_postman_id": "4b2a0d3e-1c2b-4b7c-9f1e-6f5a4d3c2b1a",
+    "name": "Atividade U2 - JWT + Tasks CRUD (Postman)",
+    "description": "Coleção pronta para Postman com autenticação JWT e CRUD de Tarefas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0. Health",
+      "item": [
+        {
+          "name": "✅ Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            },
+            "description": "Verifica se a API está rodando. Deve retornar 200."
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "✅ Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "register"]
+            },
+            "description": "Cria um novo usuário. Espera 201."
+          }
+        },
+        {
+          "name": "✅ Login (salva token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let res = {};",
+                  "try { res = pm.response.json(); } catch (e) {}",
+                  "if (res && res.token) {",
+                  "  pm.environment.set('auth_token', res.token);",
+                  "  console.log('Token JWT salvo em auth_token');",
+                  "} else {",
+                  "  console.warn('Token não encontrado na resposta');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"joao.silva@example.com\",\n  \"password\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "login"]
+            },
+            "description": "Retorna token JWT e salva em {{auth_token}}. Espera 200."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Protected",
+      "item": [
+        {
+          "name": "✅ /api/protected (Bearer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/protected",
+              "host": ["{{base_url}}"],
+              "path": ["api", "protected"]
+            },
+            "description": "Deve retornar 200 quando o token é válido."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Tasks",
+      "item": [
+        {
+          "name": "✅ Criar tarefa (mínima)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ]
+            },
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Comprar leite\"\n}" },
+            "url": { "raw": "{{base_url}}/api/tasks", "host": ["{{base_url}}"], "path": ["api", "tasks"] },
+            "description": "Cria uma tarefa com apenas título. Espera 201."
+          }
+        },
+        {
+          "name": "✅ Listar tarefas",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tasks", "host": ["{{base_url}}"], "path": ["api", "tasks"] },
+            "description": "Lista tarefas do usuário. Espera 200."
+          }
+        },
+        {
+          "name": "✅ Buscar por ID",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [ { "key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI" } ]
+            },
+            "description": "Substitua :taskId pelo _id retornado na criação. Espera 200."
+          }
+        },
+        {
+          "name": "✅ Atualizar (PUT)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Estudar Node.js - Atualizado\",\n  \"description\": \"Conceitos avançados\",\n  \"status\": \"in_progress\",\n  \"priority\": \"urgent\",\n  \"dueDate\": \"2025-10-31T23:59:59.000Z\",\n  \"tags\": [\"estudos\", \"backend\", \"jwt\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [ { "key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI" } ]
+            },
+            "description": "PUT exige title, status e priority. Espera 200."
+          }
+        },
+        {
+          "name": "✅ Atualizar (PATCH)",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "PATCH",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"completed\"\n}" },
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [ { "key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI" } ]
+            },
+            "description": "Atualiza apenas campos enviados. Espera 200."
+          }
+        },
+        {
+          "name": "✅ Deletar",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tasks/:taskId",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tasks", ":taskId"],
+              "variable": [ { "key": "taskId", "value": "INSERIR_ID_VALIDO_AQUI" } ]
+            },
+            "description": "Remove a tarefa. Espera 200."
+          }
+        },
+        {
+          "name": "✅ Estatísticas",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [ { "key": "token", "value": "{{auth_token}}", "type": "string" } ] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tasks/stats", "host": ["{{base_url}}"], "path": ["api", "tasks", "stats"] },
+            "description": "Resumo por status. Espera 200."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000", "type": "string" },
+    { "key": "auth_token", "value": "", "type": "string" }
+  ]
+}

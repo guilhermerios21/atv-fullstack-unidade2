@@ -3,11 +3,19 @@ import { json } from 'body-parser';
 import connectDB from '../src/config/db';
 import routes from '../src/routes/index';
 import errorMiddleware from '../src/middlewares/error.middleware';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from '../src/config/swagger';
 
 const app = express();
 
 // Middleware
 app.use(json());
+
+// Swagger documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'API Docs - JWT + Tasks CRUD',
+}));
 
 // Health check route
 app.get("/", (req: Request, res: Response) => {

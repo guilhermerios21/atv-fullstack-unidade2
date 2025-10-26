@@ -6,11 +6,19 @@ import { json } from 'body-parser';
 import connectDB from './config/db';
 import routes from './routes/index';
 import errorMiddleware from './middlewares/error.middleware';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 
 const app = express();
 
 // Middleware
 app.use(json());
+
+// Swagger documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'API Docs - JWT + Tasks CRUD',
+}));
 
 // Routes
 app.use('/api', routes);
@@ -30,6 +38,7 @@ const startServer = async () => {
         // Start the server
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
+            console.log(`📚 API Documentation available at http://localhost:${PORT}/api-docs`);
         });
     } catch (error) {
         console.error('Error starting server:', error);
