@@ -254,7 +254,7 @@ class TaskController {
 
   async getStats(req: Request, res: Response): Promise<void> {
     try {
-      const userId = (req as any).user.userId;
+      const userId = (req as any).user.id;
 
       console.log(`[TaskController] GET /tasks/stats - userId: ${userId}`);
 
